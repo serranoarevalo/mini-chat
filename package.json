@@ -1,0 +1,19 @@
+{
+  "name": "mini-chat",
+  "version": "1.0.0",
+  "description": "Mini Chat built on SocketIO and Express.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serranoarevalo/mini-chat.git"
+  },
+  "author": "Nicolás Serrano Arévalo <itnico.las.me@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/serranoarevalo/mini-chat/issues"
+  },
+  "homepage": "https://github.com/serranoarevalo/mini-chat#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
