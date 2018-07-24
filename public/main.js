@@ -9,3 +9,11 @@ const submitMessage = event => {
 };
 
 form.addEventListener("submit", submitMessage);
+
+const addMessage = data => {
+  console.log(data);
+};
+
+socket.on("new message sent", data => {
+  addMessage(data);
+});

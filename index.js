@@ -9,12 +9,12 @@ const express = require("express"),
 const PORT = 4000;
 const NEW_MESSAGE = "new message";
 
-const onNewMessage = data => {
-  console.log(data);
-};
-
 const onSocketConnection = socket => {
-  socket.on(NEW_MESSAGE, onNewMessage);
+  socket.on(NEW_MESSAGE, data => {
+    socket.broadcast.emit("new message sent", {
+      message: data
+    });
+  });
 };
 
 const handleListening = () => console.log(`Server running on port ${PORT}`);
