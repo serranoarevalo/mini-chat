@@ -5,3 +5,8 @@
   background-color: #3498db;
   color: white;
 }
+
+.messageForm,
+.nickNameForm {
+  display: none;
+}

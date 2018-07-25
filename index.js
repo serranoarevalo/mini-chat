@@ -13,8 +13,10 @@ const NEW_MESSAGE = "new message";
 
 const onSocketConnection = socket => {
   socket.on(NEW_MESSAGE, data => {
+    const { text, creator } = data;
     Message.create({
-      text: data
+      text,
+      creator
     }).then(() => {
       socket.broadcast.emit("new message sent", {
         message: data

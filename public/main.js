@@ -1,10 +1,21 @@
 const socket = io("/"),
-  form = document.querySelector(".js-form"),
+  messageForm = document.querySelector(".js-messageForm"),
   messageList = document.querySelector(".js-messageList"),
-  input = document.querySelector(".js-input");
+  messageInput = messageForm.querySelector(".js-input"),
+  nicknameForm = document.querySelector(".js-nickNameForm"),
+  nicknameInput = nicknameForm.querySelector(".js-input");
 
 const YOURS_CLASS = "yours";
 const MINE_CLASS = "mine";
+const NICKNAME = "nickname";
+
+let nickName = localStorage.getItem(NICKNAME);
+
+if (nickName) {
+  messageForm.style.display = "block";
+} else {
+  nicknameForm.style.display = "block";
+}
 
 const addMessage = (data, cssClass) => {
   const newMessage = document.createElement("li");
@@ -20,10 +31,20 @@ socket.on("new message sent", data => {
 
 const submitMessage = event => {
   event.preventDefault();
-  const inputValue = input.value;
-  socket.emit("new message", inputValue);
+  const inputValue = messageInput.value;
+  socket.emit("new message", { text: inputValue, creator: nickName });
   addMessage(inputValue, MINE_CLASS);
-  input.value = "";
+  messageInput.value = "";
 };
 
-form.addEventListener("submit", submitMessage);
+const setNickName = event => {
+  event.preventDefault();
+  const inputValue = nicknameInput.value;
+  localStorage.setItem(NICKNAME, inputValue);
+  nickName = inputValue;
+  messageForm.style.display = "block";
+  nicknameForm.style.display = "none";
+};
+
+messageForm.addEventListener("submit", submitMessage);
+nicknameForm.addEventListener("submit", setNickName);
