@@ -23,6 +23,14 @@ const onSocketConnection = socket => {
   });
 };
 
+const previousMessages = (req, res) => {
+  Message.find()
+    .sort({ _id: -1 })
+    .then(allMessages => res.json(allMessages));
+};
+
+app.get("/previous", previousMessages);
+
 const handleListening = () => console.log(`✅ Server running on port ${PORT}`);
 server.listen(PORT, handleListening);
 app.use(express.static(path.join(__dirname, "public")));
