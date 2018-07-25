@@ -11,7 +11,21 @@ const NICKNAME = "nickname";
 
 let nickName = localStorage.getItem(NICKNAME);
 
+const loadMessages = () => {
+  fetch("/previous")
+    .then(response => response.json())
+    .then(messages => {
+      messages.forEach(message => {
+        addMessage(
+          message.text,
+          message.creator === nickName ? MINE_CLASS : YOURS_CLASS
+        );
+      });
+    });
+};
+
 if (nickName) {
+  loadMessages();
   messageForm.style.display = "block";
 } else {
   nicknameForm.style.display = "block";
@@ -25,8 +39,10 @@ const addMessage = (data, cssClass) => {
 };
 
 socket.on("new message sent", data => {
-  const { message } = data;
-  addMessage(message, YOURS_CLASS);
+  const {
+    message: { text }
+  } = data;
+  addMessage(text, YOURS_CLASS);
 });
 
 const submitMessage = event => {
@@ -44,6 +60,7 @@ const setNickName = event => {
   nickName = inputValue;
   messageForm.style.display = "block";
   nicknameForm.style.display = "none";
+  loadMessages();
 };
 
 messageForm.addEventListener("submit", submitMessage);

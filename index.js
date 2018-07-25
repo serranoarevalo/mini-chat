@@ -27,8 +27,7 @@ const onSocketConnection = socket => {
 
 const previousMessages = (req, res) => {
   Message.find()
-    .sort({ _id: -1 })
-    .then(allMessages => res.json(allMessages));
+  .then(allMessages => res.json(allMessages));
 };
 
 app.get("/previous", previousMessages);
