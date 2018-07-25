@@ -3,6 +3,7 @@ const express = require("express"),
   http = require("http"),
   path = require("path"),
   db = require("./db"),
+  Message = require("./models"),
   app = express(),
   server = http.createServer(app),
   io = socketIO(server);
@@ -12,8 +13,12 @@ const NEW_MESSAGE = "new message";
 
 const onSocketConnection = socket => {
   socket.on(NEW_MESSAGE, data => {
-    socket.broadcast.emit("new message sent", {
-      message: data
+    Message.create({
+      text: data
+    }).then(() => {
+      socket.broadcast.emit("new message sent", {
+        message: data
+      });
     });
   });
 };

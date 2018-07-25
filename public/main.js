@@ -1,4 +1,4 @@
-const socket = io("http://localhost:4000"),
+const socket = io("/"),
   form = document.querySelector(".js-form"),
   messageList = document.querySelector(".js-messageList"),
   input = document.querySelector(".js-input");
