@@ -2,6 +2,7 @@ const express = require("express"),
   socketIO = require("socket.io"),
   http = require("http"),
   path = require("path"),
+  db = require("./db"),
   app = express(),
   server = http.createServer(app),
   io = socketIO(server);
@@ -17,7 +18,7 @@ const onSocketConnection = socket => {
   });
 };
 
-const handleListening = () => console.log(`Server running on port ${PORT}`);
+const handleListening = () => console.log(`✅ Server running on port ${PORT}`);
 server.listen(PORT, handleListening);
 app.use(express.static(path.join(__dirname, "public")));
 io.on("connection", onSocketConnection);
